@@ -49,3 +49,19 @@ def filter_words_by_difficulty(
             matching_words.append(entry)
 
     return matching_words
+
+
+def create_game(secret_word: str, meaning: str, lives: object) -> dict[str, object]:
+    """Create a game state with its fixed word, meaning, and starting lives."""
+    if not isinstance(secret_word, str) or not secret_word:
+        raise ValueError("secret_word must be a non-empty string")
+    if not isinstance(meaning, str) or not meaning:
+        raise ValueError("meaning must be a non-empty string")
+    if not validate_lives(lives):
+        raise ValueError("lives must be an integer from 1 through 10")
+
+    return {
+        "secret_word": secret_word,
+        "meaning": meaning,
+        "lives": int(lives),
+    }
