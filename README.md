@@ -8,10 +8,10 @@ This is a small Hangman game on computer. It is for people who want to practice 
 
 ## Setup and use
 - Prerequisites: Python 3.10+, pytest (for tests only).
-- Setup: [Fill in once chosen, e.g. `pip install pytest`.]
-- Run: [Fill in once built, e.g. `python main.py`, then a short example.]
+- Setup: `pip install pytest`
+- Run: `python main.py` — e.g. choose `easy`, then `6` lives, then guess one letter at a time until you win or run out of lives; the word's meaning is shown at the end.
 - Add your own word: open `words.csv` and add a line in the form `word,meaning`, e.g. `rabbit,a small animal with long ears`. Its difficulty is set by its length.
-- Run tests: [Fill in once chosen, e.g. `python -m pytest`.]
+- Run tests: `python -m pytest`
 
 ## Author and acknowledgements
 - Name / student ID: Krittithee Kanjanapinchote 6580988
