@@ -10,7 +10,7 @@ Write the first two expectations before implementation. Fill in actual results a
 | C3 / R1, R3 — lives boundary | The lives question before a round | Enter `0`, then `11`, then `10` | `0` and `11` show a message and ask again; `10` is accepted and the round starts with 10 lives | |
 
 ## Two review decisions
-- Plan decision: [Complete after reviewing Copilot's plan.]
+- Plan decision: Copilot's first plan put the difficulty and lives rules inside `choose_settings()` in `main.py`. I moved them to `validate_difficulty()` and `validate_lives()` in `game.py`, because `main.py` uses `input()` and is hard to test, and C3 needs an automated check that 0 and 11 lives are rejected. I also replaced its play-through, which had me guess a word I could already see, with two real rounds that include a word I added.
 - Code decision: [Complete during implementation.]
 
 ## Automated tests
