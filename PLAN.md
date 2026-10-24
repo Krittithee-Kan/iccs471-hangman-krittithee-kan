@@ -1,4 +1,5 @@
 # Implementation plan
+
 ## Steps
 1. **Validate settings and difficulty ranges.** In `game.py`, implement `validate_difficulty()`, `validate_lives()`, and `filter_words_by_difficulty()` for supported settings and word-length ranges. Covers R1 and R3.
 2. **Load words and initialize a round.** In `main.py`, implement `load_words()` with the standard-library `csv` module and select a random eligible word from `words.csv`. In `game.py`, implement `create_game()` to initialize the secret word, meaning, and lives. Covers R1.
