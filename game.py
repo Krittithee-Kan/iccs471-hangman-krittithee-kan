@@ -1,4 +1,12 @@
 from collections.abc import Iterable, Mapping
+from typing import Literal, TypedDict
+
+
+class GameState(TypedDict):
+    secret_word: str
+    meaning: str
+    lives: int
+    guessed_letters: set[str]
 
 
 def validate_difficulty(difficulty: str) -> bool:
@@ -51,7 +59,7 @@ def filter_words_by_difficulty(
     return matching_words
 
 
-def create_game(secret_word: str, meaning: str, lives: object) -> dict[str, object]:
+def create_game(secret_word: str, meaning: str, lives: object) -> GameState:
     """Create a game state with its fixed word, meaning, and starting lives."""
     if not isinstance(secret_word, str) or not secret_word:
         raise ValueError("secret_word must be a non-empty string")
@@ -64,4 +72,51 @@ def create_game(secret_word: str, meaning: str, lives: object) -> dict[str, obje
         "secret_word": secret_word,
         "meaning": meaning,
         "lives": int(lives),
+        "guessed_letters": set(),
     }
+
+
+def validate_guess(guess: str, guessed_letters: Iterable[str]) -> bool:
+    """Return whether guess is one new ASCII letter."""
+    return (
+        isinstance(guess, str)
+        and len(guess) == 1
+        and guess.isascii()
+        and guess.isalpha()
+        and guess.lower() not in guessed_letters
+    )
+
+
+def guess_letter(
+    game: GameState, guess: str
+) -> Literal["invalid", "correct", "incorrect"]:
+    """Apply one guess and return whether it was invalid, correct, or incorrect."""
+    normalized_guess = guess.strip().lower() if isinstance(guess, str) else ""
+    if not validate_guess(normalized_guess, game["guessed_letters"]):
+        return "invalid"
+
+    game["guessed_letters"].add(normalized_guess)
+    if normalized_guess in game["secret_word"].lower():
+        return "correct"
+
+    game["lives"] -= 1
+    return "incorrect"
+
+
+def display_word(game: GameState) -> str:
+    """Return the word with unguessed letters masked and spaces between letters."""
+    guessed_letters = game["guessed_letters"]
+    return " ".join(
+        letter if letter.lower() in guessed_letters else "_"
+        for letter in game["secret_word"]
+    )
+
+
+def is_won(game: GameState) -> bool:
+    """Return whether every distinct letter in the secret word has been guessed."""
+    return set(game["secret_word"].lower()).issubset(game["guessed_letters"])
+
+
+def is_lost(game: GameState) -> bool:
+    """Return whether no lives remain."""
+    return game["lives"] <= 0
